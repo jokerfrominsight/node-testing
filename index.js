@@ -41,9 +41,13 @@ io.on("connection", (socket) => {
     iterationCount++;
     var randomNumber = parseInt(Math.random() * 100) + 1;
     if (randomNumber > 50) {
-      io.emit("message", JSON.stringify({ contractData:conData,randomNumber }));
+      const sendingData = JSON.stringify({
+        contractData: conData,
+        randomNumber,
+      });
+      io.emit("message", sendingData);
     }
-  }, 10);
+  }, 1000);
 });
 
 const filterCentralData = (d1) => {
