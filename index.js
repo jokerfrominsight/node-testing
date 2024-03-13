@@ -44,13 +44,7 @@ io.on("connection", (socket) => {
     //   server.close(); // Stop the server
     //   throw new Error("Intentional error on the 10th iteration");
     // }
-  }, 1000);
-  //   setInterval(() => {
-  //     var randomNumber = parseInt(Math.random() * 100) + 1;
-  //     if (randomNumber > 50) {
-  //       io.emit("message", randomNumber);
-  //     }
-  //   }, 1000);
+  }, 10);
 });
 
 server.listen(process.env.PORT || 3000, () => {
