@@ -37,18 +37,7 @@ io.on("connection", (socket) => {
     const bufferSize = 10 * 1024; // 10KB
     const buffer = crypto.randomBytes(bufferSize);
     io.emit("message", buffer);
-    // iterationCount++;
-    // var randomNumber = parseInt(Math.random() * 100) + 1;
-    // if (randomNumber > 50) {
-    //   io.emit("message", randomNumber);
-    // }
-    // if (iterationCount === 10) {
-    //   console.log("Stopping the server after 10 iterations.");
-    //   clearInterval(intervalId); // Stop the interval
-    //   server.close(); // Stop the server
-    //   throw new Error("Intentional error on the 10th iteration");
-    // }
-  }, 10);
+  }, 100);
 });
 
 server.listen(process.env.PORT || 3000, () => {
