@@ -32,7 +32,7 @@ let iterationCount = 0;
 let dataToSend = {};
 
 io.on("connection", (socket) => {
-  console.log("A user conencted");
+  console.log("A user conencted", socket.id);
   socket.on("message", (msg) => {
     io.emit("message", msg);
   });
@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
     iterationCount++;
     var randomNumber = parseInt(Math.random() * 100) + 1;
     if (randomNumber > 50) {
-      io.emit("message", JSON.stringify({ conData }));
+      io.emit("message", JSON.stringify({ contractData:conData,randomNumber }));
     }
   }, 10);
 });
