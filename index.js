@@ -30,6 +30,12 @@ io.on("connection", (socket) => {
   socket.on("message", (msg) => {
     io.emit("message", msg);
   });
+  setInterval(() => {
+    var randomNumber = parseInt(Math.random() * 100) + 1;
+    if (randomNumber > 50) {
+      io.emit("message", randomNumber);
+    }
+  }, 1000);
 });
 
 server.listen(process.env.PORT || 3000, () => {
