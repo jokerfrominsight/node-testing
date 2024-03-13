@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import crypto from "crypto";
 const app = express();
 app.use(cors());
 app.use(function (req, res, next) {
@@ -34,10 +33,18 @@ io.on("connection", (socket) => {
   });
 
   const intervalId = setInterval(() => {
-    // const bufferSize = 2 * 1024; // 10KB
-    // const buffer = crypto.randomBytes(bufferSize);
-    io.emit("message", "buffer");
-  }, 1000);
+    iterationCount++;
+    var randomNumber = parseInt(Math.random() * 100) + 1;
+    if (randomNumber > 50) {
+      io.emit("message", randomNumber);
+    }
+    // if (iterationCount === 10) {
+    //   console.log("Stopping the server after 10 iterations.");
+    //   clearInterval(intervalId); // Stop the interval
+    //   server.close(); // Stop the server
+    //   throw new Error("Intentional error on the 10th iteration");
+    // }
+  }, 10);
 });
 
 server.listen(process.env.PORT || 3000, () => {
