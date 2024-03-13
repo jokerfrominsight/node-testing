@@ -30,6 +30,40 @@ app.get("/", (req, res) => {
 
 let iterationCount = 0;
 let dataToSend = {};
+const contracts = [
+  "DIJ24",
+  "DIK24",
+  "DIM24",
+  "DIN24",
+  "DIQ24",
+  "DIU24",
+  "DIV24",
+  "DIX24",
+  "DIZ24",
+  "DIF25",
+  "DIG25",
+  "DIH25",
+  "DIJ25",
+  "DIN25",
+  "DIV25",
+  "DIF26",
+  "DIJ26",
+  "DIN26",
+  "DIV26",
+  "DIF27",
+  "DIJ27",
+  "DIN27",
+  "DIV27",
+  "DIF28",
+  "DIJ28",
+  "DIN28",
+  "DIV28",
+  "DIF29",
+  "DIF30",
+  "DIF31",
+  "DIF32",
+  "DIF33",
+];
 
 io.on("connection", (socket) => {
   console.log("A user conencted", socket.id);
@@ -42,12 +76,13 @@ io.on("connection", (socket) => {
     var randomNumber = parseInt(Math.random() * 100) + 1;
     if (randomNumber > 50) {
       const sendingData = JSON.stringify({
-        contractData: conData,
+        contractData: contracts,
         randomNumber,
       });
+      console.log(sendingData);
       io.emit("message", sendingData);
     }
-  }, 1000);
+  }, 10000);
 });
 
 const filterCentralData = (d1) => {
@@ -77,7 +112,7 @@ const fetchContractsData = async () => {
   }
 };
 
-fetchContractsData();
+// fetchContractsData();
 server.listen(process.env.PORT || 3000, () => {
   console.log("Server is running");
 });
