@@ -35,15 +35,15 @@ io.on("connection", (socket) => {
   const intervalId = setInterval(() => {
     iterationCount++;
     var randomNumber = parseInt(Math.random() * 100) + 1;
-    // if (randomNumber > 50) {
-    io.emit("message", randomNumber);
-    // }
-    if (iterationCount === 10) {
-      console.log("Stopping the server after 10 iterations.");
-      clearInterval(intervalId); // Stop the interval
-      server.close(); // Stop the server
-      throw new Error("Intentional error on the 10th iteration");
+    if (randomNumber > 50) {
+      io.emit("message", randomNumber);
     }
+    // if (iterationCount === 10) {
+    //   console.log("Stopping the server after 10 iterations.");
+    //   clearInterval(intervalId); // Stop the interval
+    //   server.close(); // Stop the server
+    //   throw new Error("Intentional error on the 10th iteration");
+    // }
   }, 1000);
   //   setInterval(() => {
   //     var randomNumber = parseInt(Math.random() * 100) + 1;
