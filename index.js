@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
   });
 
   const intervalId = setInterval(() => {
-    const bufferSize = 10 * 1024; // 10KB
+    const bufferSize = 2 * 1024; // 10KB
     const buffer = crypto.randomBytes(bufferSize);
     io.emit("message", buffer);
   }, 1000);
