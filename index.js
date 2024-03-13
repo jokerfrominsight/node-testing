@@ -14,7 +14,7 @@ import { Server } from "socket.io";
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", // Specify the origin of your client
+    origin: "https://insight.corp.hertshtengroup.com", // Specify the origin of your client
     methods: ["GET", "POST"], // Specify the methods allowed
     // credentials: true, // Set to true if you're using credentials
   },
