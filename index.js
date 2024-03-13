@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
     iterationCount++;
     var randomNumber = parseInt(Math.random() * 100) + 1;
     if (randomNumber > 50) {
-      io.emit("message", conData);
+      io.emit("message", JSON.stringify({ conData }));
     }
   }, 10);
 });
@@ -60,7 +60,6 @@ const filterCentralData = (d1) => {
     tempFilterData.push(tempItem);
   });
   conData = tempFilterData;
-  console.log(conData);
 };
 const fetchContractsData = async () => {
   try {
