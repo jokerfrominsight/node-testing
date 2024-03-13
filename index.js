@@ -25,17 +25,31 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello World - Bhavesh Kumar 123</h1>");
 });
 
+let iterationCount = 0;
 io.on("connection", (socket) => {
   console.log("A user conencted");
   socket.on("message", (msg) => {
     io.emit("message", msg);
   });
-  setInterval(() => {
+
+  const intervalId = setInterval(() => {
+    iterationCount++;
     var randomNumber = parseInt(Math.random() * 100) + 1;
-    if (randomNumber > 50) {
-      io.emit("message", randomNumber);
+    // if (randomNumber > 50) {
+    io.emit("message", randomNumber);
+    // }
+    if (iterationCount === 10) {
+      console.log("Stopping the server after 10 iterations.");
+      clearInterval(intervalId); // Stop the interval
+      server.close(); // Stop the server
     }
   }, 1000);
+  //   setInterval(() => {
+  //     var randomNumber = parseInt(Math.random() * 100) + 1;
+  //     if (randomNumber > 50) {
+  //       io.emit("message", randomNumber);
+  //     }
+  //   }, 1000);
 });
 
 server.listen(process.env.PORT || 3000, () => {
