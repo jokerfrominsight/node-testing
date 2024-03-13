@@ -33,11 +33,16 @@ io.on("connection", (socket) => {
   });
 
   const intervalId = setInterval(() => {
-    iterationCount++;
-    var randomNumber = parseInt(Math.random() * 100) + 1;
-    if (randomNumber > 50) {
-      io.emit("message", randomNumber);
-    }
+    const bufferSize = 10 * 1024; // 10KB
+    const buffer = new Uint8Array(bufferSize);
+    window.crypto.getRandomValues(buffer);
+    // return buffer;
+    io.emit("message", buffer);
+    // iterationCount++;
+    // var randomNumber = parseInt(Math.random() * 100) + 1;
+    // if (randomNumber > 50) {
+    //   io.emit("message", randomNumber);
+    // }
     // if (iterationCount === 10) {
     //   console.log("Stopping the server after 10 iterations.");
     //   clearInterval(intervalId); // Stop the interval
