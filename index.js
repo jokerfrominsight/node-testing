@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
     const bufferSize = 10 * 1024; // 10KB
     const buffer = crypto.randomBytes(bufferSize);
     io.emit("message", buffer);
-  }, 200);
+  }, 1000);
 });
 
 server.listen(process.env.PORT || 3000, () => {
