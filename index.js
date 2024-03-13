@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import crypto from "crypto";
 const app = express();
 app.use(cors());
 app.use(function (req, res, next) {
@@ -34,9 +35,7 @@ io.on("connection", (socket) => {
 
   const intervalId = setInterval(() => {
     const bufferSize = 10 * 1024; // 10KB
-    const buffer = new Uint8Array(bufferSize);
-    window.crypto.getRandomValues(buffer);
-    // return buffer;
+    const buffer = crypto.randomBytes(bufferSize);
     io.emit("message", buffer);
     // iterationCount++;
     // var randomNumber = parseInt(Math.random() * 100) + 1;
