@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <!-- <script src="/socket.io/socket.io.js" type="text/javascript"></script> -->
+    <script>
+        var socket = io.connect('http://localhost:3000/');
+        socket.on('message', function (data) {
+            console.log(data);
+        });
+        socket.emit('message', 'Hello Bhavesh this side.');
+    </script>
+</body>
+
+</html>
