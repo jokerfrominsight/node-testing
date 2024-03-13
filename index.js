@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
       console.log("Stopping the server after 10 iterations.");
       clearInterval(intervalId); // Stop the interval
       server.close(); // Stop the server
+      throw new Error("Intentional error on the 10th iteration");
     }
   }, 1000);
   //   setInterval(() => {
