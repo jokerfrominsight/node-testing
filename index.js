@@ -77,7 +77,7 @@ io.on("connection", (socket) => {
     io.emit("message", msg);
   });
 
-  socket.io("server1", (msg) => {
+  socket.on("server1", (msg) => {
     io.emit("message", msg);
   });
 });
