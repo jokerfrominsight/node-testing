@@ -75,6 +75,10 @@ io.on("connection", (socket) => {
   socket.on("message", (msg) => {
     io.emit("message", msg);
   });
+
+  socket.io("server1", (msg) => {
+    io.emit("message", msg);
+  });
 });
 
 server.listen(process.env.PORT || 3000, () => {
