@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import axios from "axios";
+import http from "http";
+import { Server } from "socket.io";
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const app = express();
 app.use(cors());
@@ -11,12 +13,13 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
   next();
 });
-import http from "http";
-import { Server } from "socket.io";
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://insight.corp.hertshtengroup.com", // Specify the origin of your client
+    origin: [
+      "https://insight.corp.hertshtengroup.com",
+      "http://localhost:3030",
+    ], // Specify the origin of your client
     methods: ["GET", "POST"], // Specify the methods allowed
     // credentials: true, // Set to true if you're using credentials
   },
@@ -72,19 +75,6 @@ io.on("connection", (socket) => {
   socket.on("message", (msg) => {
     io.emit("message", msg);
   });
-
-  //   setInterval(() => {
-  //     iterationCount++;
-  //     var randomNumber = parseInt(Math.random() * 100) + 1;
-  //     if (randomNumber > 50) {
-  //       const sendingData = JSON.stringify({
-  //         contractData: contractExpiry,
-  //         randomNumber,
-  //       });
-  //       console.log(sendingData);
-  //       io.emit("message", sendingData);
-  //     }
-  //   }, 10000);
 });
 
 server.listen(process.env.PORT || 3000, () => {
