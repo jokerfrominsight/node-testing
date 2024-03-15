@@ -22,7 +22,7 @@ const io = new Server(server, {
     //   "http://localhost:3030",
     // ], // Specify the origin of your client
     methods: ["GET", "POST"], // Specify the methods allowed
-    // credentials: true, // Set to true if you're using credentials
+    credentials: false, // Set to true if you're using credentials
   },
 });
 
