@@ -24,6 +24,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"], // Specify the methods allowed
     credentials: false, // Set to true if you're using credentials
   },
+  httpsCompression: false,
 });
 
 let conData = "";
