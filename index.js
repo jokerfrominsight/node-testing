@@ -26,6 +26,7 @@ const io = new Server(server, {
   },
   httpsCompression: false,
   httpCompression: false,
+  perMessageDeflate: false,
 });
 
 let conData = "";
