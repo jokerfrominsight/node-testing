@@ -25,6 +25,7 @@ const io = new Server(server, {
     credentials: false, // Set to true if you're using credentials
   },
   httpsCompression: false,
+  httpCompression: false,
 });
 
 let conData = "";
