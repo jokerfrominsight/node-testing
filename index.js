@@ -76,7 +76,7 @@ const contractExpiry = [
 
 io.on("connection", (socket) => {
   console.log("A user conencted", socket.id);
-  socket.emit("connected", "You are now connected to the bhavesh server!");
+  // socket.emit("connected", "You are now connected to the bhavesh server!");
   socket.on("message", (msg) => {
     io.emit("message", msg);
   });
@@ -85,9 +85,9 @@ io.on("connection", (socket) => {
     io.emit("message", msg);
   });
 });
-setInterval(() => {
-  io.emit("change", "Hello Bhavesh this side.");
-}, 5000);
+// setInterval(() => {
+//   io.emit("change", "Hello Bhavesh this side.");
+// }, 5000);
 server.listen(process.env.PORT || 3000, () => {
   console.log("Server is running");
 });
