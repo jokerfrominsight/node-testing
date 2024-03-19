@@ -81,7 +81,7 @@ io.on("connection", (socket) => {
     io.emit("message", msg);
   });
 
-  socket.on("server1", (msg) => {
+  socket.on("updateonserver", (msg) => {
     io.emit("message", msg);
   });
 });
