@@ -41,19 +41,9 @@ const usersData = {};
 io.on("connection", (socket) => {
   console.log("A user conencted", socket.id);
   io.emit("message", globalData);
-  // socket.on("firstTimeConnect", (responseData) => {
-  //   console.log(responseData);
-  //   if (!usersData.hasOwnProperty(responseData)) {
-  //     usersData[responseData] = [];
-  //   }
-  // });
-  // io.emit("KOLEvent", globalData);
-  // io.emit("GUREvent", GURglobalData);
 
   socket.on("updateonserver", (msg) => {
-    // console.log(msg);
     globalData = msg;
-    // io.emit("KOLEvent", msg);
     io.emit("message", msg);
   });
   socket.on("updateFromGUR", (msg) => {
