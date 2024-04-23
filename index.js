@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
 
   socket.on("updateonserver", (msg) => {
     // console.log(msg);
-    // globalData = msg;
+    globalData = msg;
     // io.emit("KOLEvent", msg);
     io.emit("message", msg);
   });
