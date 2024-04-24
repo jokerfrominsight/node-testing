@@ -55,9 +55,9 @@ const emitEventToITM = (ITM, data) => {
     data.length > 0 &&
     usersData.hasOwnProperty("contracts")
   ) {
-    const dataToSend ={};
-    dataToSend['contracts']=usersData["contracts"];
-    dataToSend[ITM]=data;
+    const dataToSend = {};
+    dataToSend["contracts"] = usersData["contracts"];
+    dataToSend[ITM] = data;
     io.emit(ITM, JSON.stringify(dataToSend));
   } else {
     io.emit(ITM, "");
@@ -78,6 +78,7 @@ const updateUsersData = (responseData) => {
 };
 io.on("connection", (socket) => {
   console.log("A user conencted", socket.id);
+  io.emit("message", globalData);
   socket.on("firstTimeConnect", (ITM) => {
     if (usersData.hasOwnProperty(ITM)) {
       emitEventToITM(ITM, usersData[ITM]);
