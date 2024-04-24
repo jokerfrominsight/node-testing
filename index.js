@@ -50,6 +50,7 @@ const hasDataChanged = (oldData, newData) => {
   return false;
 };
 const emitEventToITM = (ITM, data) => {
+  console.log(ITM, data, usersData);
   if (
     ITM.length === 3 &&
     data.length > 0 &&
