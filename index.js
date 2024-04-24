@@ -66,20 +66,20 @@ const emitEventToITM = (ITM, data) => {
 const updateUsersData = (responseData) => {
   for (const key in responseData) {
     if (!usersData.hasOwnProperty(key)) {
-      usersData[key] = responseData[key];
       emitEventToITM(key, responseData[key]);
     } else {
       if (hasDataChanged(usersData[key], responseData[key])) {
-        usersData[key] = responseData[key];
         emitEventToITM(key, responseData[key]);
       }
     }
+    usersData[key] = responseData[key];
   }
 };
 io.on("connection", (socket) => {
   console.log("A user conencted", socket.id);
   io.emit("message", globalData);
   socket.on("firstTimeConnect", (ITM) => {
+    console.log(`${ITM} connected.`);
     if (usersData.hasOwnProperty(ITM)) {
       emitEventToITM(ITM, usersData[ITM]);
     } else {
