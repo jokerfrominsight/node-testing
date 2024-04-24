@@ -50,7 +50,6 @@ const hasDataChanged = (oldData, newData) => {
   return false;
 };
 const emitEventToITM = (ITM, data) => {
-  console.log(ITM, data, usersData);
   if (
     ITM.length === 3 &&
     data.length > 0 &&
@@ -60,6 +59,7 @@ const emitEventToITM = (ITM, data) => {
     dataToSend["contracts"] = usersData["contracts"];
     dataToSend[ITM] = data;
     io.emit(ITM, JSON.stringify(dataToSend));
+    console.log(`Data Send to ${ITM}`);
   } else {
     io.emit(ITM, "");
   }
