@@ -38,58 +38,17 @@ app.get("/", (req, res) => {
 let globalData = "";
 let GURglobalData = "";
 const usersData = {};
-
-const hasDataChanged = (oldData, newData) => {
-  if (oldData.length !== newData.length) return true;
-  const len = oldData.length;
-  for (let i = 0; i < len; i++) {
-    if (parseFloat(oldData[i]) !== parseFloat(newData[i])) {
-      return true;
-    }
-  }
-  return false;
-};
-const emitEventToITM = (ITM, data) => {
-  if (
-    ITM.length === 3 &&
-    data.length > 0 &&
-    usersData.hasOwnProperty("contracts")
-  ) {
-    const dataToSend ={};
-    dataToSend['contracts']=usersData["contracts"];
-    dataToSend[ITM]=data;
-    io.emit(ITM, JSON.stringify(dataToSend));
-  } else {
-    io.emit(ITM, "");
-  }
-};
-const updateUsersData = (responseData) => {
-  for (const key in responseData) {
-    if (!usersData.hasOwnProperty(key)) {
-      usersData[key] = responseData[key];
-      emitEventToITM(key, responseData[key]);
-    } else {
-      if (hasDataChanged(usersData[key], responseData[key])) {
-        usersData[key] = responseData[key];
-        emitEventToITM(key, responseData[key]);
-      }
-    }
-  }
-};
 io.on("connection", (socket) => {
   console.log("A user conencted", socket.id);
-  socket.on("firstTimeConnect", (ITM) => {
-    if (usersData.hasOwnProperty(ITM)) {
-      emitEventToITM(ITM, usersData[ITM]);
-    } else {
-      usersData[ITM] = [];
-    }
-  });
+  io.emit("message", globalData);
 
-  socket.on("updateonserver", (responseData) => {
-    updateUsersData(responseData);
-    globalData = responseData;
-    io.emit("message", responseData);
+  socket.on("updateonserver", (msg) => {
+    globalData = msg;
+    io.emit("message", msg);
+  });
+  socket.on("updateFromGUR", (msg) => {
+    GURglobalData = msg;
+    io.emit("GUREvent", msg);
   });
 });
 
