@@ -50,7 +50,7 @@ const hasDataChanged = (oldData, newData) => {
   return false;
 };
 const emitEventToITM = (ITM, data) => {
-  console.log('ITM',ITM);
+  console.log("ITM", ITM, data.length, usersData.hasOwnProperty("contracts"));
   if (
     ITM.length === 3 &&
     data.length > 0 &&
@@ -94,7 +94,7 @@ io.on("connection", (socket) => {
     updateUsersData(responseData);
     globalData = responseData;
     io.emit("message", responseData);
-    console.log('New Data Send.');
+    console.log("New Data Send.");
   });
 });
 
