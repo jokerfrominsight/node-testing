@@ -83,12 +83,12 @@ io.on("connection", (socket) => {
   io.emit("message", globalData);
   socket.on("firstTimeConnect", (ITM) => {
     console.log(`${ITM} connected.`);
+    socket.join(ITM);
     if (usersData.hasOwnProperty(ITM)) {
       emitEventToITM(ITM, usersData[ITM]);
     } else {
       usersData[ITM] = [];
     }
-    socket.join(ITM);
   });
 
   socket.on("updateonserver", (responseData) => {
