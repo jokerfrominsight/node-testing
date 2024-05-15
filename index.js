@@ -58,9 +58,11 @@ const emitEventToITM = (ITM, data) => {
     const dataToSend = {};
     dataToSend["contracts"] = usersData["contracts"];
     dataToSend[ITM] = data;
-    io.emit(ITM, JSON.stringify(dataToSend));
+    // io.emit(ITM, JSON.stringify(dataToSend));
+    io.to(ITM).emit("latestData", JSON.stringify(dataToSend));
   } else {
-    io.emit(ITM, "");
+    // io.emit(ITM, "");
+    io.to(ITM).emit("latestData", "");
   }
 };
 const updateUsersData = (responseData) => {
@@ -86,6 +88,7 @@ io.on("connection", (socket) => {
     } else {
       usersData[ITM] = [];
     }
+    socket.join(ITM);
   });
 
   socket.on("updateonserver", (responseData) => {
