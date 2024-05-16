@@ -57,12 +57,13 @@ const emitEventToITM = (ITM, data) => {
     data.length > 0 &&
     usersData.hasOwnProperty("contracts")
   ) {
-    const dataToSend = {};
+    let dataToSend = {};
     dataToSend["contracts"] = usersData["contracts"];
     dataToSend[ITM] = data;
+    dataToSend = JSON.stringify(dataToSend);
     // io.emit(ITM, JSON.stringify(dataToSend));
-    io.to(ITM).emit("latestData", JSON.stringify(dataToSend));
-    console.log(`Event sended to ${ITM}.`);
+    io.to(ITM).emit("latestData", dataToSend);
+    console.log(`Event sended to ${ITM} and data ${dataToSend}.`);
   } else {
     // io.emit(ITM, "");
     io.to(ITM).emit("latestData", "");
