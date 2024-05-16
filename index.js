@@ -50,9 +50,6 @@ const hasDataChanged = (oldData, newData) => {
   return false;
 };
 const emitEventToITM = (ITM, data) => {
-  // console.log(ITM);
-
-  // console.log(ITM, `ITM`);
   if (ITM === "contracts") return;
   if (
     ITM.length === 3 &&
@@ -63,22 +60,15 @@ const emitEventToITM = (ITM, data) => {
     dataToSend["contracts"] = usersData["contracts"];
     dataToSend[ITM] = data;
     dataToSend = JSON.stringify(dataToSend);
-    // io.emit(ITM, JSON.stringify(dataToSend));
     io.to(ITM).emit("latestData", dataToSend);
-    // console.log(`Event sended to ${ITM} and data ${dataToSend}.`);
   } else {
-    // io.emit(ITM, "");
     io.to(ITM).emit("latestData", "");
-    // console.log(`Event sended to ${ITM}.`);
   }
 };
 const updateUsersData = (responseData) => {
   responseData = JSON.parse(responseData);
-  // console.log(responseData, typeof responseData);
   for (const key in responseData) {
-    console.log(key, "key");
     if (!usersData.hasOwnProperty(key)) {
-      // usersData[key] = responseData[key];
       emitEventToITM(`${key}`, responseData[key]);
     } else {
       if (hasDataChanged(usersData[key], responseData[key])) {
@@ -89,7 +79,6 @@ const updateUsersData = (responseData) => {
   }
 };
 io.on("connection", (socket) => {
-  // console.log("A user conencted", socket.id);
   io.emit("message", globalData);
   socket.on("firstTimeConnect", (ITM) => {
     console.log(`${ITM} connected.`);
