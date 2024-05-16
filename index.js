@@ -50,7 +50,7 @@ const hasDataChanged = (oldData, newData) => {
   return false;
 };
 const emitEventToITM = (ITM, data) => {
-  // console.log(ITM, data);
+  // console.log(ITM);
   if (ITM === "contracts") return;
   if (
     ITM.length === 3 &&
@@ -63,14 +63,15 @@ const emitEventToITM = (ITM, data) => {
     dataToSend = JSON.stringify(dataToSend);
     // io.emit(ITM, JSON.stringify(dataToSend));
     io.to(ITM).emit("latestData", dataToSend);
-    console.log(`Event sended to ${ITM} and data ${dataToSend}.`);
+    // console.log(`Event sended to ${ITM} and data ${dataToSend}.`);
   } else {
     // io.emit(ITM, "");
     io.to(ITM).emit("latestData", "");
-    console.log(`Event sended to ${ITM}.`);
+    // console.log(`Event sended to ${ITM}.`);
   }
 };
 const updateUsersData = (responseData) => {
+  console.log(responseData);
   for (const key in responseData) {
     if (!usersData.hasOwnProperty(key)) {
       // usersData[key] = responseData[key];
