@@ -51,6 +51,8 @@ const hasDataChanged = (oldData, newData) => {
 };
 const emitEventToITM = (ITM, data) => {
   // console.log(ITM);
+
+  console.log(ITM);
   if (ITM === "contracts") return;
   if (
     ITM.length === 3 &&
@@ -71,7 +73,7 @@ const emitEventToITM = (ITM, data) => {
   }
 };
 const updateUsersData = (responseData) => {
-  console.log(responseData);
+  // console.log(responseData);
   for (const key in responseData) {
     if (!usersData.hasOwnProperty(key)) {
       // usersData[key] = responseData[key];
