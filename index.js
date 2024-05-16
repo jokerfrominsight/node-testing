@@ -29,7 +29,7 @@ const io = new Server(server, {
   perMessageDeflate: false,
 });
 
-let conData = "";
+let conData = "<h1>Hello World!</h1>";
 // const io = new Server(server);
 app.get("/", (req, res) => {
   res.send(conData);
@@ -50,6 +50,8 @@ const hasDataChanged = (oldData, newData) => {
   return false;
 };
 const emitEventToITM = (ITM, data) => {
+  // console.log(ITM, data);
+  if (ITM === "contracts") return;
   if (
     ITM.length === 3 &&
     data.length > 0 &&
@@ -60,22 +62,24 @@ const emitEventToITM = (ITM, data) => {
     dataToSend[ITM] = data;
     // io.emit(ITM, JSON.stringify(dataToSend));
     io.to(ITM).emit("latestData", JSON.stringify(dataToSend));
+    console.log(`Event sended to ${ITM}.`);
   } else {
     // io.emit(ITM, "");
     io.to(ITM).emit("latestData", "");
+    console.log(`Event sended to ${ITM}.`);
   }
 };
 const updateUsersData = (responseData) => {
   for (const key in responseData) {
     if (!usersData.hasOwnProperty(key)) {
-      usersData[key] = responseData[key];
+      // usersData[key] = responseData[key];
       emitEventToITM(key, responseData[key]);
     } else {
       if (hasDataChanged(usersData[key], responseData[key])) {
-        usersData[key] = responseData[key];
         emitEventToITM(key, responseData[key]);
       }
     }
+    usersData[key] = responseData[key];
   }
 };
 io.on("connection", (socket) => {
