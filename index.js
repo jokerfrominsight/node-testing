@@ -73,9 +73,10 @@ const emitEventToITM = (ITM, data) => {
   }
 };
 const updateUsersData = (responseData) => {
-  console.log(responseData, typeof responseData);
+  responseData = JSON.parse(responseData);
+  // console.log(responseData, typeof responseData);
   for (const key in responseData) {
-    // console.log(key, "key");
+    console.log(key, "key");
     if (!usersData.hasOwnProperty(key)) {
       // usersData[key] = responseData[key];
       emitEventToITM(`${key}`, responseData[key]);
