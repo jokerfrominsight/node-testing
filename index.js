@@ -61,7 +61,6 @@ const emitEventToITM = (ITM, data) => {
     dataToSend[ITM] = data;
     dataToSend = JSON.stringify(dataToSend);
     io.to(ITM).emit("latestData", dataToSend);
-    console.log(`Event emitted to ${ITM}`);
   } else {
     io.to(ITM).emit("latestData", {});
   }
