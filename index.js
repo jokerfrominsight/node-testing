@@ -38,6 +38,7 @@ app.get("/", (req, res) => {
 let globalData = "";
 let GURglobalData = "";
 const usersData = {};
+const GurUsersData = {};
 
 const hasDataChanged = (oldData, newData) => {
   if (oldData.length !== newData.length) return true;
@@ -49,15 +50,15 @@ const hasDataChanged = (oldData, newData) => {
   }
   return false;
 };
-const emitEventToITM = (ITM, data) => {
+const emitEventToITM = (ITM, data, storedData) => {
   if (ITM === "contracts") return;
   if (
     ITM.length === 3 &&
     data.length > 0 &&
-    usersData.hasOwnProperty("contracts")
+    storedData.hasOwnProperty("contracts")
   ) {
     let dataToSend = {};
-    dataToSend["contracts"] = usersData["contracts"];
+    dataToSend["contracts"] = storedData["contracts"];
     dataToSend[ITM] = data;
     dataToSend = JSON.stringify(dataToSend);
     io.to(ITM).emit("latestData", dataToSend);
@@ -69,13 +70,26 @@ const updateUsersData = (responseData) => {
   responseData = JSON.parse(responseData);
   for (const key in responseData) {
     if (!usersData.hasOwnProperty(key)) {
-      emitEventToITM(`${key}`, responseData[key]);
+      emitEventToITM(`${key}`, responseData[key], usersData);
     } else {
       if (hasDataChanged(usersData[key], responseData[key])) {
-        emitEventToITM(`${key}`, responseData[key]);
+        emitEventToITM(`${key}`, responseData[key], usersData);
       }
     }
     usersData[key] = responseData[key];
+  }
+};
+const updateGURUsersData = (responseData) => {
+  responseData = JSON.parse(responseData);
+  for (const key in responseData) {
+    if (!GurUsersData.hasOwnProperty(key)) {
+      emitEventToITM(`${key}`, responseData[key], GurUsersData);
+    } else {
+      if (hasDataChanged(GurUsersData[key], responseData[key])) {
+        emitEventToITM(`${key}`, responseData[key], GurUsersData);
+      }
+    }
+    GurUsersData[key] = responseData[key];
   }
 };
 io.on("connection", (socket) => {
@@ -84,9 +98,14 @@ io.on("connection", (socket) => {
     console.log(`${ITM} connected.`);
     socket.join(ITM);
     if (usersData.hasOwnProperty(ITM)) {
-      emitEventToITM(ITM, usersData[ITM]);
+      emitEventToITM(ITM, usersData[ITM], usersData);
     } else {
       usersData[ITM] = [];
+    }
+    if (GurUsersData.hasOwnProperty(ITM)) {
+      emitEventToITM(ITM, GurUsersData[ITM], GurUsersData);
+    } else {
+      GurUsersData[ITM] = [];
     }
   });
 
@@ -94,6 +113,11 @@ io.on("connection", (socket) => {
     updateUsersData(responseData);
     globalData = responseData;
     io.emit("message", responseData);
+  });
+  socket.on("GURupdateonserver", (responseData) => {
+    updateGURUsersData(responseData);
+    GURglobalData = responseData;
+    io.emit("GURmessage", responseData);
   });
 });
 
