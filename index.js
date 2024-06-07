@@ -98,7 +98,7 @@ io.on("connection", (socket) => {
     console.log(`${ITM} connected.`);
     socket.join(ITM);
     if (ITM === "POSTEST") {
-      io.to("POSTEST").emit(globalData);
+      io.to("POSTEST").emit("message", globalData);
     }
     if (usersData.hasOwnProperty(ITM)) {
       emitEventToITM(ITM, usersData[ITM], usersData);
@@ -115,7 +115,7 @@ io.on("connection", (socket) => {
   socket.on("updateonserver", (responseData) => {
     updateUsersData(responseData);
     globalData = responseData;
-    io.to("POSTEST").emit(responseData);
+    io.to("POSTEST").emit("message", responseData);
   });
   socket.on("GURupdateonserver", (responseData) => {
     updateGURUsersData(responseData);
