@@ -95,10 +95,11 @@ const updateGURUsersData = (responseData) => {
 io.on("connection", (socket) => {
   io.emit("message", globalData);
   socket.on("firstTimeConnect", (ITM) => {
-    console.log(`${ITM} connected.`);
+    // console.log(`${ITM} connected.`);
     socket.join(ITM);
     if (ITM === "POSTEST") {
       io.to("POSTEST").emit("message", globalData);
+      // console.log("Response from .Net: ", new Date());
     }
     if (usersData.hasOwnProperty(ITM)) {
       emitEventToITM(ITM, usersData[ITM], usersData);
@@ -116,6 +117,7 @@ io.on("connection", (socket) => {
     updateUsersData(responseData);
     globalData = responseData;
     io.to("POSTEST").emit("message", responseData);
+    console.log("Response from .Net: ", new Date());
   });
   socket.on("GURupdateonserver", (responseData) => {
     updateGURUsersData(responseData);
